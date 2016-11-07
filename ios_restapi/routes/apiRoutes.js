@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Message = require('./models/message');
+var Tasks = require('./models/tasks');
 
 router.use(function timeLog(req, res, next){
   console.log("Request Recieved: " , dateDisplayed(Date.now()));
@@ -8,25 +8,25 @@ router.use(function timeLog(req, res, next){
 });
 
 router.get('/', function(req, res){
-  res.json({message: "Rest API"});
+  res.json({tasks: "Rest API"});
 });
 
-router.route('/messages').get(function(req, res) {
-  Message.find(function(err, messages) {
+router.route('/tasks').get(function(req, res) {
+  Message.find(function(err, tasks) {
     if (err)
     res.send(err);
-    res.json(messages);
+    res.json(tasks);
   });
 });
 
-router.route('/messages').post(function(req, res) {
-  var message = new Message();
-  message.text = req.body.text;
-	message.user = req.body.user;
-  message.save(function(err) {
+router.route('/tasks').post(function(req, res) {
+  var task = new task();
+  tasks.text = req.body.text;
+	tasks.user = req.body.username;
+  tasks.save(function(err) {
     if (err)
     res.send(err);
-    res.json({ message: 'Message created successfully!' });
+    res.json({ message: 'Task created successfully!' });
   });
 });
 
