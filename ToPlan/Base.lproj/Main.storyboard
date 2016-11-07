@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HoF-hE-YYQ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HoF-hE-YYQ">
                                 <rect key="frame" x="0.0" y="28" width="375" height="590"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -50,12 +50,15 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="To Do list" image="first" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="table" destination="HoF-hE-YYQ" id="nQg-ya-Adc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
         </scene>
-        <!--Second-->
+        <!--Add Task-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="ToPlan" customModuleProvider="target" sceneMemberID="viewController">
@@ -78,8 +81,11 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="UO3-fO-XOZ"/>
+                                </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZY-G6-Lx7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZY-G6-Lx7">
                                 <rect key="frame" x="164" y="144" width="46" height="30"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
@@ -89,15 +95,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="GZY-G6-Lx7" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="148" id="Gz5-wk-r6U"/>
+                            <constraint firstItem="GZY-G6-Lx7" firstAttribute="top" secondItem="Bvr-rd-Rcl" secondAttribute="bottom" constant="28" id="HvL-Lm-WZt"/>
                             <constraint firstItem="to1-2e-epi" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="UOI-ee-IE4"/>
                             <constraint firstItem="Bvr-rd-Rcl" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="Ur6-1g-4HC"/>
                             <constraint firstItem="Bvr-rd-Rcl" firstAttribute="trailing" secondItem="QS5-Rx-YEW" secondAttribute="trailingMargin" id="Yba-3o-CO5"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="GZY-G6-Lx7" secondAttribute="bottom" constant="444" id="Yui-fa-0br"/>
                             <constraint firstItem="Bvr-rd-Rcl" firstAttribute="top" secondItem="to1-2e-epi" secondAttribute="bottom" constant="26" id="Ziy-Qc-kz4"/>
                             <constraint firstItem="GZY-G6-Lx7" firstAttribute="top" secondItem="Bvr-rd-Rcl" secondAttribute="bottom" constant="28" id="uy7-p7-PhW"/>
                             <constraint firstItem="to1-2e-epi" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="19" id="w9S-kM-5Qs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GZY-G6-Lx7" secondAttribute="trailing" constant="149" id="zak-JF-Fed"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Add Task" image="second" selectedImage="second" id="cPa-gy-q4n"/>
                     <connections>
                         <outlet property="itemTextField" destination="Bvr-rd-Rcl" id="4nG-du-ItK"/>
                     </connections>
