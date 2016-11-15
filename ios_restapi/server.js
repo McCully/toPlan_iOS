@@ -1,9 +1,8 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
-var Todo       = require('./app/taskRoute.js');
+var tasks       = require('./routes/tasks');
 var passport   = require('passport');
-// var expressSession = require('express-session');
 var mongoose   = require("mongoose");
 var path       = require('path');
 var router = express.Router();
@@ -19,19 +18,10 @@ mongoose.connection.on('error' , function(err){
 })
 
 
-
-// app.use(expressSession({secret: 'mySecretKey'}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-// passport.serializeUser(function(user, done) {
-//   done(null, user._id);
-// });
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/taskRoute', Todo);
+app.use('/tasks', tasks);
 
 app.set('port' , (process.env.PORT || 8080));
 app.listen(app.get('port') , function(){
