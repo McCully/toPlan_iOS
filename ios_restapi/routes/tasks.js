@@ -4,7 +4,7 @@ var Task = require('../models/task');
 var mongo = require('mongodb');
 
 
-// api -----------------------------------------------
+// api ------------------------------------------
 // get all todos
 router.get('/', function(req, res) {
 	Task.find({} , function(err, task) {
