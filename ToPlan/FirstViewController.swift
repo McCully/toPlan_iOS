@@ -7,55 +7,86 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Alamofire
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var table: UITableView!
-    var items: [String] = []
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-        
-    }
+class FirstViewController: UIViewController, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    var jsonArray:NSArray?
+    var newArray: Array<String> = []
+    var IDArray: Array<String> = []
     
     
-    
-
-    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        
-        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-        
-        cell.textLabel?.text = items[indexPath.row]
-        return cell
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        table.tableFooterView = UIView()
-        
+        self.tableView.delegate = self
+//        self.tableView.dataSource = self
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    func downloadAndUpdate(){
+        self.newArray.removeAll()
+        self.IDArray.removeAll()
+    
+        Alamofire.request(url: "http://localhost:8080/tasks", method: .get) .responseJSON { response in
+            print(response.request)
+            print(response.response)
+            print(response.data)
+            print(response.result)
         
-        let itemsObject = UserDefaults.standard.object(forKey: "items")
-        if let tempItems = itemsObject as? [String] {
-            items = tempItems
+        
+        if let JSON = response.result.value {
+            self.jsonArray = JSON as? NSMutableArray
+            for item in self.jsonArray! {
+                print(item["item"]!)
+                let string = item["title"]!
+                let ID = item["id"]!
+                print("String is \(string!)")
+                
+                self.newArray.append(string! as! String)
+                self.IDArray.append(ID! as! String)
+            }
+            
+            print("New array is \(self.newArray)")
+            
+            self.tableView.reloadData()
+            }
         }
-        
-        table.reloadData()
-        
     }
+    
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            items.remove(at: indexPath.row)
-            table.reloadData()
-            UserDefaults.standard.set(items, forKey: "items")
+        if editingStyle == .delete {
+            print("ID us \(self.IDArray[indexPath.row])")
+            
+            Alamofire.request(url: "http://localhost:8080/tasks/\(self.IDArray[indexPath.row])", method: .delete, encoding: JSONEncoding.default)
+            
+            self.downloadAndUpdate()
+        } else if editingStyle == .insert {
+            
         }
     }
     
-
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.downloadAndUpdate()
+        print("Calling...")
+    }
+    
+    
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.newArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath) as UITableViewCell
+        
+        cell.textLabel?.text = self.newArray[indexPath.row]
+        return cell
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

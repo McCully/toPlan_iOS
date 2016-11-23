@@ -7,34 +7,21 @@
 //
 
 import UIKit
+import Alamofire
+
+
+
 
 class SecondViewController: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet weak var itemTextField: UITextField!
+    @IBOutlet weak var textView: UITextField
     
     
     
     @IBAction func add(_ sender: AnyObject) {
-        let itemsObject = UserDefaults.standard.object(forKey: "items")
+        Alamofire.request(.POST, "https:localhost:8080/tasks" , parameters: ["title": self.textView.test!])
         
-        var items:[String]
-        
-        if let tempItems = itemsObject as? [String] {
-            
-            items = tempItems
-            
-            items.append(itemTextField.text!)
-        
-        } else {
-        
-            items = [itemTextField.text!]
-        
-        }
-        
-        
-        UserDefaults.standard.set(items, forKey: "items")
-        
-        itemTextField.text! = ""
+    self.navigationController!.popViewController(animated: true)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
